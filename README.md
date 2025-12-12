@@ -189,51 +189,7 @@ npm start
 
 ## API 接口
 
-### POST /api/generate
-
-**请求体**：
-
-```typescript
-{
-  prd: string;
-  role: "Frontend" | "Backend" | "Test";
-  deadline: string; // YYYY-MM-DDTHH:mm
-  unavailableSlots: Array<{
-    date: string; // YYYY-MM-DD
-    isFullDay: boolean;
-    startTime?: string; // HH:mm
-    endTime?: string; // HH:mm
-  }>;
-  workingHoursPerDay?: number; // 默认 8
-  aiConfig?: {
-    provider: "anthropic" | "openai" | "custom";
-    apiKey: string;
-    baseURL?: string;
-    modelName: string;
-  };
-}
-```
-
-**响应**：
-
-```typescript
-{
-  tasks: Task[];
-  totalEstimatedHours: number;
-  availableHours: number;
-  isFeasible: boolean;
-  warnings?: string[];
-  backendTasks: BackendTask[]; // 后端格式
-}
-```
-
-### POST /api/test-ai-config
-
-测试AI配置连接状态
-
-### POST /api/fetch-prd
-
-从文档链接获取PRD内容
+参考 [API 文档](API.md)
 
 ## 开发说明
 
