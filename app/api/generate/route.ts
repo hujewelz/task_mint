@@ -60,10 +60,11 @@ export async function POST(request: NextRequest) {
       if (!hasApiKey) {
         return NextResponse.json(
           {
-            error: "AI API 密钥未配置",
-            details: "请在前端AI设置页面配置AI服务，或在环境变量中设置API密钥",
+            error: "AI Configuration Required",
+            details: "No AI configuration found. Please configure your AI settings in the Settings page (click the 'AI Settings' button in the top right corner) or set up environment variables with your API keys.",
+            suggestion: "Go to Settings → Choose AI Provider → Enter API Key → Test Configuration → Save"
           },
-          { status: 500 }
+          { status: 400 }
         );
       }
     }
