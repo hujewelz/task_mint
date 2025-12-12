@@ -118,7 +118,7 @@ export default function Home() {
         role,
         deadline,
         unavailableSlots: unavailableSlots.filter((slot) => slot.date),
-        aiConfig: config,
+        aiConfig: config, // This is guaranteed to exist due to earlier validation
       };
 
       const response = await fetch("/api/generate", {

@@ -26,7 +26,7 @@ const requestSchema = z.object({
     apiKey: z.string().min(1),
     baseURL: z.string().optional(),
     modelName: z.string().min(1),
-  }).optional(),
+  }),
 });
 
 export async function POST(request: NextRequest) {
@@ -38,6 +38,23 @@ export async function POST(request: NextRequest) {
     const validationResult = requestSchema.safeParse(body);
 
     if (!validationResult.success) {
+      // 检查是否是 aiConfig 缺失导致的验证失败
+      const aiConfigError = validationResult.error.errors.find(
+        (err) => err.path.includes("aiConfig")
+      );
+
+      if (aiConfigError) {
+        return NextResponse.json(
+          {
+            error: "AI Configuration Required",
+            details: "AI configuration must be provided. Please configure your AI settings in the Settings page (click the 'AI Settings' button in the top right corner).",
+            suggestion: "Go to Settings → Choose AI Provider → Enter API Key → Test Configuration → Save"
+          },
+          { status: 400 }
+        );
+      }
+
+      // 其他参数验证失败
       return NextResponse.json(
         {
           error: "参数验证失败",

@@ -60,7 +60,7 @@ export interface GenerateTaskRequest {
   deadline: string;
   unavailableSlots: UnavailableSlot[];
   workingHoursPerDay?: number;
-  aiConfig?: AIConfig;
+  aiConfig: AIConfig;
 }
 
 /**
