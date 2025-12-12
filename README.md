@@ -84,28 +84,7 @@ task_mint/
 npm install
 ```
 
-### 2. 配置环境变量
-
-复制 `.env.example` 为 `.env`，并填写你的 API 密钥：
-
-```bash
-cp .env.example .env
-```
-
-编辑 `.env` 文件：
-
-```env
-# 选择 AI 提供商：anthropic 或 openai
-AI_PROVIDER=anthropic
-
-# Anthropic API Key（如果使用 Claude）
-ANTHROPIC_API_KEY=your_anthropic_api_key_here
-
-# OpenAI API Key（如果使用 OpenAI）
-OPENAI_API_KEY=your_openai_api_key_here
-```
-
-### 3. 运行开发服务器
+### 2. 运行开发服务器
 
 ```bash
 npm run dev
@@ -113,7 +92,7 @@ npm run dev
 
 打开浏览器访问 [http://localhost:3000](http://localhost:3000)
 
-### 4. 构建生产版本
+### 3. 构建生产版本
 
 ```bash
 npm run build
@@ -124,11 +103,15 @@ npm start
 
 ### AI设置配置
 
+系统使用前端设置页面进行AI配置，无需手动编辑配置文件：
+
 1. 点击右上角的"AI设置"按钮
 2. 选择AI提供商（Anthropic、OpenAI、自定义）
 3. 填写API密钥和相关配置
 4. 点击"测试配置"验证连接
 5. 保存设置
+
+配置信息将自动保存到浏览器本地存储，下次访问时自动加载。
 
 ### 任务生成流程
 
@@ -285,11 +268,11 @@ npx shadcn@latest add [component-name]
 3. 设置环境变量
 4. 部署完成
 
-### 环境变量配置
+### 部署配置
 
-生产环境需要配置以下变量：
-- `AI_PROVIDER`
-- `ANTHROPIC_API_KEY` 或 `OPENAI_API_KEY`
+- 主要通过前端AI设置页面进行配置
+- 可选择性配置环境变量作为默认值（参考 `.env.example`）
+- 所有配置支持运行时动态修改
 
 ## 更新日志
 
