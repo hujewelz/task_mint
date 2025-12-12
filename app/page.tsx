@@ -85,6 +85,14 @@ export default function Home() {
     setResult(null);
 
     try {
+      // Check AI configuration first
+      const aiConfig = localStorage.getItem("ai_config");
+      const config = aiConfig ? JSON.parse(aiConfig) : null;
+
+      if (!config || !config.provider || !config.apiKey || !config.modelName) {
+        throw new Error("Please configure AI settings first. Click the 'AI Settings' button in the top right corner to set up your AI provider, API key, and model.");
+      }
+
       let prdContent = prd;
 
       if (inputMode === "link") {
@@ -104,9 +112,6 @@ export default function Home() {
         const fetchData = await fetchResponse.json();
         prdContent = fetchData.content;
       }
-
-      const aiConfig = localStorage.getItem("ai_config");
-      const config = aiConfig ? JSON.parse(aiConfig) : null;
 
       const requestData: GenerateTaskRequest = {
         prd: prdContent,

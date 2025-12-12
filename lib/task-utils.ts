@@ -27,7 +27,7 @@ import {
 export async function parsePRDToTasks(
   prd: string,
   role: Role,
-  aiConfig?: AIConfig
+  aiConfig: AIConfig
 ): Promise<CandidateTask[]> {
   const prompt = `请分析以下 PRD 文档，并根据 ${role} 角色的工作范围，拆解出相关的任务清单。
 
@@ -302,7 +302,7 @@ export async function generateTaskPlan(
   deadline: string,
   unavailableSlots: UnavailableSlot[],
   workingHoursPerDay: number = 8,
-  aiConfig?: AIConfig
+  aiConfig: AIConfig
 ): Promise<GenerateTaskResponse> {
   // 1. 使用 AI 解析 PRD
   const candidateTasks = await parsePRDToTasks(prd, role, aiConfig);

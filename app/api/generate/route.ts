@@ -49,24 +49,16 @@ export async function POST(request: NextRequest) {
 
     const data = validationResult.data as GenerateTaskRequest;
 
-    // 检查 AI 配置：优先使用前端传入的配置，否则检查环境变量
-    if (!data.aiConfig) {
-      const apiProvider = process.env.AI_PROVIDER || "anthropic";
-      const hasApiKey =
-        apiProvider === "anthropic"
-          ? !!process.env.ANTHROPIC_API_KEY
-          : !!process.env.OPENAI_API_KEY;
-
-      if (!hasApiKey) {
-        return NextResponse.json(
-          {
-            error: "AI Configuration Required",
-            details: "No AI configuration found. Please configure your AI settings in the Settings page (click the 'AI Settings' button in the top right corner) or set up environment variables with your API keys.",
-            suggestion: "Go to Settings → Choose AI Provider → Enter API Key → Test Configuration → Save"
-          },
-          { status: 400 }
-        );
-      }
+    // AI configuration is required from frontend only
+    if (!data.aiConfig || !data.aiConfig.provider || !data.aiConfig.apiKey || !data.aiConfig.modelName) {
+      return NextResponse.json(
+        {
+          error: "AI Configuration Required",
+          details: "AI configuration must be provided. Please configure your AI settings in the Settings page (click the 'AI Settings' button in the top right corner).",
+          suggestion: "Go to Settings → Choose AI Provider → Enter API Key → Test Configuration → Save"
+        },
+        { status: 400 }
+      );
     }
 
     // 生成任务计划
