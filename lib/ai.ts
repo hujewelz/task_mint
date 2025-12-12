@@ -3,8 +3,6 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { AIConfig } from "@/types/task";
 
-const AI_PROVIDER = process.env.AI_PROVIDER || "anthropic";
-
 /**
  * 获取 AI 模型实例
  */

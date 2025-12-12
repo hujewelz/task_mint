@@ -63,30 +63,32 @@ export async function POST(request: NextRequest) {
         details: `模型响应: ${text.substring(0, 100)}${text.length > 100 ? "..." : ""}`,
       });
 
-    } catch (aiError: any) {
+    } catch (aiError: unknown) {
       console.error("AI API Error:", aiError);
 
       // 解析不同类型的错误
       let errorMessage = "AI API 调用失败";
       let errorDetails = "";
 
-      if (aiError.message?.includes("invalid x-api-key") || aiError.message?.includes("authentication")) {
+      const error = aiError as { message?: string; statusCode?: number };
+
+      if (error.message?.includes("invalid x-api-key") || error.message?.includes("authentication")) {
         errorMessage = "API Key 无效或已过期";
         errorDetails = "请检查 API Key 是否正确";
-      } else if (aiError.message?.includes("Not Found") || aiError.statusCode === 404) {
+      } else if (error.message?.includes("Not Found") || error.statusCode === 404) {
         errorMessage = "模型不存在或 Base URL 不正确";
         errorDetails = "请检查模型名称和 Base URL 是否正确";
-      } else if (aiError.message?.includes("No available") || aiError.message?.includes("support")) {
+      } else if (error.message?.includes("No available") || error.message?.includes("support")) {
         errorMessage = "该账号不支持所选模型";
         errorDetails = "请尝试其他模型名称或联系服务提供商";
-      } else if (aiError.message?.includes("quota") || aiError.message?.includes("limit")) {
+      } else if (error.message?.includes("quota") || error.message?.includes("limit")) {
         errorMessage = "API 配额不足或达到限制";
         errorDetails = "请检查账号余额或调用限制";
-      } else if (aiError.message?.includes("timeout")) {
+      } else if (error.message?.includes("timeout")) {
         errorMessage = "请求超时";
         errorDetails = "网络连接可能不稳定，请重试";
       } else {
-        errorDetails = aiError.message || "未知错误";
+        errorDetails = error.message || "未知错误";
       }
 
       return NextResponse.json(

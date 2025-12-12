@@ -1,6 +1,5 @@
 import {
   addDays,
-  addHours,
   format,
   isAfter,
   isBefore,
@@ -105,8 +104,7 @@ export function getNextAvailableTime(
 export function scheduleTask(
   startTime: Date,
   durationHours: number,
-  unavailableSlots: UnavailableSlot[],
-  workingHoursPerDay: number = 8
+  unavailableSlots: UnavailableSlot[]
 ): Date {
   let currentTime = getNextAvailableTime(startTime, unavailableSlots);
   let remainingHours = durationHours;
