@@ -90,7 +90,7 @@ export default function Home() {
       const config = aiConfig ? JSON.parse(aiConfig) : null;
 
       if (!config || !config.provider || !config.apiKey || !config.modelName) {
-        throw new Error("Please configure AI settings first. Click the 'AI Settings' button in the top right corner to set up your AI provider, API key, and model.");
+        throw new Error("请先配置AI服务。点击右上角的\"AI设置\"按钮设置AI提供商、API密钥和模型。");
       }
 
       let prdContent = prd;

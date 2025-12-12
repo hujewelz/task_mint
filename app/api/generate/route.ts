@@ -46,9 +46,9 @@ export async function POST(request: NextRequest) {
       if (aiConfigError) {
         return NextResponse.json(
           {
-            error: "AI Configuration Required",
-            details: "AI configuration must be provided. Please configure your AI settings in the Settings page (click the 'AI Settings' button in the top right corner).",
-            suggestion: "Go to Settings → Choose AI Provider → Enter API Key → Test Configuration → Save"
+            error: "需要配置AI服务",
+            details: "请先配置AI服务。点击右上角的\"AI设置\"按钮进入设置页面，完成AI服务配置。",
+            suggestion: "设置步骤：AI设置 → 选择AI提供商 → 输入API密钥 → 测试配置 → 保存"
           },
           { status: 400 }
         );
@@ -70,9 +70,9 @@ export async function POST(request: NextRequest) {
     if (!data.aiConfig || !data.aiConfig.provider || !data.aiConfig.apiKey || !data.aiConfig.modelName) {
       return NextResponse.json(
         {
-          error: "AI Configuration Required",
-          details: "AI configuration must be provided. Please configure your AI settings in the Settings page (click the 'AI Settings' button in the top right corner).",
-          suggestion: "Go to Settings → Choose AI Provider → Enter API Key → Test Configuration → Save"
+          error: "需要配置AI服务",
+          details: "请先配置AI服务。点击右上角的\"AI设置\"按钮进入设置页面，完成AI服务配置。",
+          suggestion: "设置步骤：AI设置 → 选择AI提供商 → 输入API密钥 → 测试配置 → 保存"
         },
         { status: 400 }
       );
