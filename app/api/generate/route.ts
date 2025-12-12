@@ -49,21 +49,23 @@ export async function POST(request: NextRequest) {
 
     const data = validationResult.data as GenerateTaskRequest;
 
-    // 检查环境变量
-    const apiProvider = process.env.AI_PROVIDER || "anthropic";
-    const hasApiKey =
-      apiProvider === "anthropic"
-        ? !!process.env.ANTHROPIC_API_KEY
-        : !!process.env.OPENAI_API_KEY;
+    // 检查 AI 配置：优先使用前端传入的配置，否则检查环境变量
+    if (!data.aiConfig) {
+      const apiProvider = process.env.AI_PROVIDER || "anthropic";
+      const hasApiKey =
+        apiProvider === "anthropic"
+          ? !!process.env.ANTHROPIC_API_KEY
+          : !!process.env.OPENAI_API_KEY;
 
-    if (!hasApiKey) {
-      return NextResponse.json(
-        {
-          error: "AI API 密钥未配置",
-          details: `请在 .env 文件中设置 ${apiProvider === "anthropic" ? "ANTHROPIC_API_KEY" : "OPENAI_API_KEY"}`,
-        },
-        { status: 500 }
-      );
+      if (!hasApiKey) {
+        return NextResponse.json(
+          {
+            error: "AI API 密钥未配置",
+            details: "请在前端AI设置页面配置AI服务，或在环境变量中设置API密钥",
+          },
+          { status: 500 }
+        );
+      }
     }
 
     // 生成任务计划
